@@ -1,0 +1,52 @@
+{
+  "name": "vinculivo",
+  "displayName": "Vinculivo",
+  "description": "Verified project context and decision handoffs for VS Code",
+  "version": "0.1.0",
+  "publisher": "armotusitio",
+  "author": { "name": "Alejandro Daniel Di Stefano", "url": "https://armotusitio.com.ar" },
+  "license": "MIT",
+  "private": true,
+  "repository": { "type": "git", "url": "https://github.com/Drako01/vinculivo.git" },
+  "bugs": { "url": "https://github.com/Drako01/vinculivo/issues" },
+  "homepage": "https://github.com/Drako01/vinculivo#readme",
+  "keywords": ["context", "decision records", "ADR", "AI handoff", "project memory", "local first"],
+  "categories": ["Other", "Machine Learning"],
+  "engines": { "vscode": "^1.96.0" },
+  "extensionKind": ["workspace"],
+  "main": "./dist/extension.js",
+  "icon": "media/brand/vinculivo-icon-256.png",
+  "galleryBanner": { "color": "#121825", "theme": "dark" },
+  "activationEvents": ["onCommand:vinculivo.openControlCenter", "onView:vinculivo.launcher"],
+  "capabilities": {
+    "untrustedWorkspaces": { "supported": "limited", "description": "Vinculivo does not index or export documents in untrusted workspaces." },
+    "virtualWorkspaces": { "supported": "limited", "description": "Only local file-based workspaces are indexed in v0.1.0." }
+  },
+  "contributes": {
+    "commands": [
+      { "command": "vinculivo.openControlCenter", "title": "Vinculivo: Open Control Center" },
+      { "command": "vinculivo.scan", "title": "Vinculivo: Scan Project Documentation" },
+      { "command": "vinculivo.copyHandoff", "title": "Vinculivo: Copy Context Handoff" }
+    ],
+    "viewsContainers": { "activitybar": [{ "id": "vinculivo", "title": "Vinculivo", "icon": "media/brand/vinculivo-activity-bar.svg" }] },
+    "views": { "vinculivo": [{ "id": "vinculivo.launcher", "name": "Control Center", "type": "tree" }] },
+    "configuration": { "title": "Vinculivo", "properties": {
+      "vinculivo.maxHandoffChars": { "type": "integer", "default": 12000, "minimum": 1000, "maximum": 50000, "description": "Maximum characters of context copied manually to the clipboard (not an exact token count)." }
+    } }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.cjs",
+    "verify": "npm run typecheck && npm run test",
+    "package:vsix": "npm run build && vsce package --no-dependencies --out vinculivo.vsix && node scripts/smoke-vsix.cjs vinculivo.vsix",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.96.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.7.3"
+  }
+}
