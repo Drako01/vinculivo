@@ -9,7 +9,7 @@
     "url": "https://armotusitio.com.ar"
   },
   "license": "MIT",
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/Drako01/vinculivo.git"
