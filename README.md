@@ -1,150 +1,193 @@
 <div align="center">
-
-<img src="media/brand/vinculivo-icon-256.png" width="112" alt="Vinculivo icon" />
+  <img src="media/brand/vinculivo-icon-256.png" width="128" alt="Vinculivo official brand icon: linked four-node network in circular ring" />
 
 # Vinculivo
+### Verified Project Context & Decision Intelligence
 
-**Verified Project Context & Decision Intelligence**
+**Decisions with provenance. Change signals with evidence. Context your agents can actually use.**
 
-*Project memory grounded in your own files — evidence, not another chatbot.*
-
-**ArmoTuSitio Engineering Tools** · VS Code extension · Local-first · Private development candidate
+[ArmoTuSitio](https://armotusitio.com.ar) · VS Code / ArmoTuSitio IDE · TypeScript · Local-first
 
 </div>
 
 > [!IMPORTANT]
-> **v0.1.0 · Private testing · Not published.** This repository is currently private. There is no public release, no Marketplace listing and no Open VSX publication. The first VSIX is exclusively for owner testing in ArmoTuSitio IDE / VS Code. Screenshots and public launch assets will be added only after real-device testing.
+> **v0.2.0 — Preview candidate.** The repository is **public**, but publishing the extension to VS Code Marketplace / Open VSX is a **separate step** and is **not yet confirmed**. `package.json` sets `preview: true` for the eventual public preview. The PR CI generates an Actions VSIX for manual validation; real IDE UX acceptance is pending.
 
-## Why Vinculivo?
+## Why Vinculivo exists
 
-Long-running projects accumulate rules, ADRs and architectural assumptions across Markdown documents. AI sessions and developer handoffs frequently lose that context. Vinculivo provides a **read-only, locally grounded index** of those sources and creates a **manual, cited handoff** for continuing a task with the assistant or engineer of your choice.
+Every engineering project accumulates architectural decisions, agent instructions, constraints, verification evidence and hidden knowledge. AI coding tools often start sessions without the context needed to respect those agreements. Vinculivo brings that context into the editor, linked to its evidence, without sending your repository to an external service.
 
-It does **not** claim to understand the entire codebase, prove decisions correct or transfer a provider's private conversation history. It complements — rather than replaces — AI agent memory and project tooling.
+Vinculivo is **not another chatbot**. It is a project-context and decision governance extension supporting a full workflow: **discover → register → link → verify → detect changes → preflight → handoff**.
 
-## What it does in v0.1.0
+## Identidad de marca / Brand identity
 
-| Capability | Current implementation |
-| --- | --- |
-| Documentation intake | Local `AGENTS.md`, `CLAUDE.md`, root `README.md`, and selected `docs/adr`, `docs/decisions`, `docs/architecture`, `docs/design` Markdown |
-| Context sections | Extracts headings, excerpts, source path, line number and local SHA-256 fingerprint |
-| Evidence navigation | Opens the cited source line directly in the VS Code editor |
-| Change signals | Marks documents changed **since the previous scan**, not semantically invalid decisions |
-| Context handoff | Explicit clipboard export with relevant sections and configurable character budget |
-| Editor UI | Dark Premium Control Center in the **main editor**, Activity Bar monochrome launcher |
-| Trust & privacy | No automatic scan, no telemetry, no HTTP APIs, no external model calls; blocks untrusted or non-local workspaces |
-| Developer quality | TypeScript, unit tests, reproducible lockfile, private PR CI and VSIX artifact with checksum |
+![Moodboard de la identidad Vinculivo — concepto visual, no captura de producto](media/brand/vinculivo-moodboard.png)
 
-## UI & brand
+El logo aprobado es **la fuente de verdad**: anillo circular, tres nodos exteriores, nodo central y conexiones en cian/violeta. No se cambió el símbolo; las adaptaciones conservan su geometría. El icono de Activity Bar utiliza una variante monocromática con `currentColor`.
 
-The identity uses a connected-node symbol to represent traced decisions and context. The Activity Bar SVG is **monochrome** (`currentColor`) and follows the active VS Code theme. The Control Center uses native editor theme tokens and remains in the central editor area, not a custom sidebar dashboard.
+- [Manual de identidad, uso de logo y guía UX/UI](docs/BRAND_IDENTITY.md)
+- [Moodboard en SVG editable](media/brand/vinculivo-moodboard.svg) · [PNG de alta resolución](media/brand/vinculivo-moodboard.png)
+- [Inventario de assets y procedencia](docs/BRAND_ASSETS.md) · [Design tokens CSS](media/brand/tokens.css)
 
-**Real screenshots are pending private acceptance testing**. We will capture actual screens from the installed VSIX before making the repository public. No simulated screenshots or misleading Marketplace badges are used.
+**Nota:** el panel ilustrado dentro del moodboard es una propuesta de dirección visual. Las futuras capturas funcionales deben proceder del Extension Host real, no de renders o mockups.
 
-## Installation — private build
+## What works in this Preview candidate
 
-1. Open a green CI run for the private PR, and download its **`vinculivo-private-vsix`** artifact (GitHub access required).
-2. Unzip the artifact and compare the file's SHA-256 with `vinculivo.vsix.sha256`.
-3. In **ArmoTuSitio IDE** (or VS Code), use **Extensions → `...` → Install from VSIX...**.
-4. Select `vinculivo.vsix`, reload if requested, and click the Vinculivo Activity Bar icon.
-5. Choose **Open Vinculivo Control Center**. On the central panel, click **Scan documentation**. Workspace Trust must be enabled.
+| Area | Capability | Guarantees and boundaries |
+| --- | --- | --- |
+| **Source intelligence** | Bounded indexing of `AGENTS.md`, `CLAUDE.md`, root `README.md` and Markdown ADR/architecture/decisions/design documents. Each section includes source location and SHA-256 fingerprint. | Explicit scan in trusted workspaces; local or `vscode-remote` file providers. Skipped/partial indexing is reported. |
+| **Decision register** | Create, edit, remove, accept, supersede and deprecate decisions. Record rationale, source Markdown and linked repository paths. | Decisions begin as proposals; editing an accepted decision **revokes prior review**. User confirmation is required to accept. |
+| **Change intelligence** | Compare linked file fingerprints and Git changes from the reviewed SHA, including working-tree modifications and untracked files, against review baselines. | Changes trigger **review suggested**, not claims of semantic invalidity. Unavailable evidence becomes **unknown**, never a fabricated PASS. |
+| **Preflight** | Prioritize relevant decisions, documentation and imported evidence for a task; report unknown or potentially stale decisions. | Deterministic local ranking, no remote LLM dependency. |
+| **Agent handoff** | Generate source-referenced Markdown for Claude Code, Codex, GitHub Copilot or a neutral consumer; preview and manually copy. | Byte-based approximate token budget, configurable limits and heuristic redaction; not a model-exact tokenizer or secret guarantee. |
+| **Portable decision register** | Export/import a JSON decision bundle after explicit user confirmation. | Imported decisions are always **unreviewed proposals**, even when the source bundle claims acceptance. |
+| **Evidence ecosystem** | Explicitly import JSON reports using `vinculivo-evidence-v1`. Extensions can register opt-in providers through the exported API. | Imported reports are third-party/user-provided assertions, **not independently validated**. No claim of live integration until adapters are implemented upstream. |
+| **Control Center** | Full editor-area workbench with Overview, Decisions, Preflight and Evidence, filtering, responsive layout, source navigation and keyboard focus states. | Activity Bar icon monochrome and derived from the official logo. Theme-aware colors, strict Webview CSP. |
+| **Engineering hygiene** | Modular TypeScript, tests for parser, lifecycle, signals, budgets, portability and Webview script syntax. | PR CI runs Ubuntu, Windows and macOS against the exact PR head; VSIX candidate produced on Linux only. No automatic release. |
 
-### Local build
+### UI and brand
 
-Requires Node.js 22+, npm and a compatible VS Code-derived IDE (VS Code API `^1.96.0`).
+The top brand icon and `media/brand/vinculivo-activity-bar.svg` share the **same actual geometry**: thin circular boundary, three outer nodes, a central fourth node and a triangular set of links. The Activity Bar is **monochrome (`currentColor`)**, following VS Code theme conventions. The Control Center opens in the **main editor**, not in a compressed sidebar.
+
+**Authentic screenshots are pending review in ArmoTuSitio IDE.** No static UI mockups are represented as actual extension-host screenshots. See [private acceptance plan](docs/PRIVATE_TEST_PLAN.md).
+
+## Quick start — Preview validation
+
+1. Open [the PR](https://github.com/Drako01/vinculivo/pull/1) and its green GitHub Actions run.
+2. Download the **`vinculivo-private-vsix`** artifact, unzip it and verify the `.vsix.sha256` checksum.
+3. In **ArmoTuSitio IDE** or VS Code: **Extensions → `…` → Install from VSIX…**. Select `vinculivo.vsix` and reload the window.
+4. Open a project in a trusted workspace and click the **Vinculivo** Activity Bar icon. The actual Control Center opens in the editor area.
+5. Click **Scan sources**. Explore the documented sections and open a source line.
+6. Open **Decisions**, create a proposal, link it to `src/...` or `folder/**`, then explicitly **Review & accept** after checking the code.
+7. Change a linked file, rescan and check the **review suggested** signal. Open **Preflight & handoff** to create a task-specific briefing with the new warning.
+8. Preview the Markdown and use **Copy approved handoff** (copy means user-approved export, not proof that decisions are correct). Paste where needed.
+
+### Installation from source
+
+Requires **Node.js 22+**, npm and VS Code API `^1.96.0`.
 
 ```bash
 git clone https://github.com/Drako01/vinculivo.git
 cd vinculivo
-npm ci --ignore-scripts
+npm ci --ignore-scripts --no-audit --no-fund
 npm run verify
 npm run package:vsix
 ```
 
-`npm run verify` checks TypeScript and runs focused unit tests. `npm run package:vsix` emits `vinculivo.vsix` and `vinculivo.vsix.sha256` for local inspection. **No script publishes anything.** The repository must remain accessible to your authenticated GitHub account when private.
+> The repository is public. `npm run package:vsix` creates a candidate locally; it never publishes a release. The generated CI artifact is a validation candidate, not proof of Marketplace/Open VSX publication.
 
-## Workflow
+## Decisions: what is reviewed, what is merely detected?
 
-1. Add or maintain the project's real `AGENTS.md`, `CLAUDE.md`, architecture notes and ADRs.
-2. Run `Vinculivo: Scan Project Documentation` or open the Control Center and scan.
-3. Review the document cards, source paths and any **SOURCE CHANGED** signal. Click a citation to verify it in the editor.
-4. Enter a task or topic to prioritize relevant sections; press **Copy context handoff**.
-5. Review the clipboard contents before pasting into Claude Code, Codex, Copilot, another agent or an engineering handoff.
+Vinculivo distinguishes **workflow state** and **evidence state**:
 
-**Example handoff (illustrative):**
+- **Proposed:** a developer entered or imported the decision; it is not accepted.
+- **Accepted:** a developer explicitly acknowledged reviewing the sources and affected paths. This is **not** a formal correctness proof.
+- **Review suggested:** a referenced document or linked file appears changed, or a Git diff touches a linked directory. Human confirmation is needed.
+- **Unknown:** no reliable review baseline exists, or Git/linked evidence is unavailable.
+- **Superseded / deprecated:** historic decisions remain visible but do not control new task preflights.
 
-```text
-# Vinculivo — Project Context Handoff
-Project: payments-api
-Git HEAD: 4bc... (full SHA in actual export)
-Task: company-scoped authorization
+A clean signal means only *no relevant changes were detected within the checked scope*. It never means the decision is universally correct. Individual files are fingerprinted on review. Directory patterns such as `src/auth/**` are monitored through Git diffs from that SHA; a missing Git repository limits those signals.
 
-## API Authorization
-Source: docs/adr/0003-authorization.md:1 · SHA-256 excerpt source: ...
-...document excerpt...
+## Preflight and token economy
+
+The selected task is used to score titles, source paths, excerpts and decisions without calling a model. Handoffs include:
+
+1. The selected task and Git HEAD.
+2. Review warnings, not hidden behind a "green" summary.
+3. User-reviewed decision summaries, rationale and related paths.
+4. Relevant sourced Markdown excerpts with file, line and digest.
+5. Explicitly imported third-party evidence, labeled **unverified**.
+6. Instructions to verify code and **avoid repeating tests on unchanged code**.
+
+A maximum-size budget is enforced using UTF-8 bytes divided by four as an **approximation** of token count; this is **not** exact for any proprietary tokenizer. The preview is generated locally. Clipboard export requires a user action.
+
+## Evidence integration
+
+Generic JSON reports can be imported manually; direct extension-to-extension adapters require the respective extension to register a compatible evidence provider. This design avoids undocumented coupling to the release internals of Probato PR, Indizivo, Orquestivo, Saturivo, Noditrivo and Vestigivo RCA.
+
+Example file:
+
+```json
+{
+  "schema": "vinculivo-evidence-v1",
+  "provider": "Orquestivo",
+  "title": "PR #127 checks",
+  "summary": "Validated unit and CI checks against the referenced commit",
+  "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}
 ```
 
-Source hashes support traceability, not authenticity or correctness guarantees. The result includes *only* local Markdown snippets chosen by a straightforward keyword ranking, not full codebase semantic search.
+Read [the evidence adapter contract](docs/EVIDENCE_INTEGRATION.md). Source references and imported claims must be independently reviewed.
 
-## Commands
+## Workspace, privacy and security
 
-| Command Palette | Behavior |
+Vinculivo makes **no automatic external API request**, sends **no telemetry**, and does not run or control AI agents. No automatic Git writes or shell scripts are executed. Repository scanning is explicit and requires Workspace Trust. Local Git reads use `execFile` without a shell and a timeout; `git` is optional. Path traversal and local symlink escapes are rejected.
+
+- Indexed excerpts remain in extension memory; workspace-state storage retains documentation fingerprints, user-entered decisions and imported summaries.
+- Exporting bundles **writes a file only at the user-selected destination**. Imported decisions must be re-reviewed.
+- Clipboard content may be readable by other applications. **Review it before pasting into external assistants.** Heuristic credential redaction is not a DLP system.
+- Documentation contents are untrusted. Handoffs explicitly warn destination agents not to follow embedded instructions as higher-priority commands.
+- A `vscode-remote` provider may be indexed through the VS Code FS API; local Git comparisons are unavailable there, so baselines become unknown instead of green.
+
+Full disclosures and responsible reporting: [SECURITY.md](SECURITY.md).
+
+## Architecture
+
+```text
+src/
+  core.ts          Bounded Markdown parser, source fingerprints, context selection
+  intelligence.ts  Decision lifecycle, change signals, preflight, portable handoff
+  bundle.ts        Import/export decision bundle (always downgrade imported approvals)
+  storage.ts       Workspace-scoped decision/evidence state
+  scan.ts          VS Code FS + filesystem containment + bounded Git comparisons
+  ui.ts            CSP-restricted theme-aware Control Center Webview
+  extension.ts     Commands, state transitions, guarded user actions, evidence API
+```
+
+See [architecture and threat model](docs/ARCHITECTURE.md), [user guide (ES)](docs/GUIA_DE_USO_ES.md), and [QA matrix](docs/PRIVATE_TEST_PLAN.md).
+
+### Commands
+
+| Command | Purpose |
 | --- | --- |
-| `Vinculivo: Open Control Center` | Opens the central editor dashboard |
-| `Vinculivo: Scan Project Documentation` | Explicitly scans eligible Markdown documents |
-| `Vinculivo: Copy Context Handoff` | Copies an export from the last scan (task optional) |
+| `Vinculivo: Open Control Center` | Open the central workbench |
+| `Vinculivo: Scan Project Documentation` | Explicitly index eligible documents |
+| `Vinculivo: Copy Context Handoff` | Copy a generated portable context after scan |
+| `Vinculivo: Collect Registered Evidence` | Ask a manually selected registered provider for reports |
 
-**Setting:** `vinculivo.maxHandoffChars` (default `12000`, range `1000–50000`). This is a **character limit**, not a precise token measurement.
+Settings: `vinculivo.maxHandoffChars` (default `50000`, maximum `50000`). Token budget is also configurable in the Preflight UI.
 
-## Privacy and security
+## Build, verification and governance
 
-- **Local-first:** no telemetry, network transmissions, automatic agent requests or Git writes.
-- **Opt-in read:** scanning occurs only after a user command in a trusted local workspace.
-- **Data retention:** raw Markdown excerpts live in extension memory only; document fingerprints persist in workspace state for change comparison.
-- **Clipboard:** export is manually triggered. Review copied context before sharing it with external tools.
-- **Secrets:** a small heuristic redacts credential-like lines; it **cannot guarantee removal of all secrets**.
-- **Webview:** HTML escapes document content and enforces a nonce-based Content Security Policy.
+```bash
+npm ci --ignore-scripts --no-audit --no-fund
+npm run typecheck
+npm run test
+npm run package:vsix
+```
 
-Read [SECURITY.md](SECURITY.md) before production usage.
+CI is **PR/manual only**, checking the same head SHA on `ubuntu-latest`, `windows-latest` and `macos-latest`. VSIX and checksum are uploaded **only** by Linux as **private Actions artifacts**. The `main` merge path does not re-execute the full suite or publish to GitHub Releases, Open VSX or Marketplace. Public distribution requires a separate explicit authorization.
 
-## Scope and known limitations
+## Known boundaries (deliberate, not hidden)
 
-- Single active workspace folder per scan (active editor's folder; otherwise first folder).
-- Local `file:` workspace support only; no remote or virtual workspace index in this version.
-- At most 500 Markdown files discovered, 120 eligible files read, 100 KB per document and 40 headings per file; very large documentation sets may be partially indexed.
-- No AST/symbol graph, semantic consistency engine, database, automatic ADR creation, Git blame or GitHub ingestion yet.
-- Change detection compares **document file content** against the prior scan; it does not detect a decision invalidated by unrelated code changes.
-- Clipboard export is heuristic keyword selection; no external embeddings or provider-specific APIs.
-- No external security audit or end-to-end IDE acceptance is claimed for this initial candidate.
-
-## Roadmap (not implemented)
-
-- [ ] User-approved decision records with rationale, lifecycle and links to exact Git commits.
-- [ ] Evidence-based staleness detection from impacted code, PRs and ADR dependencies.
-- [ ] Source-backed preflight and incremental handoff across Claude Code / Codex / other assistants.
-- [ ] Optional adapters to Probato PR, Indizivo, Orquestivo, Saturivo, Noditrivo and Vestigivo RCA.
-- [ ] Multi-root, remote-workspace support, advanced filtering, keyboard accessibility audit and cross-platform IDE integration tests.
-- [ ] Screenshots from the installed extension; private owner acceptance prior to public release.
-
-## Engineering / delivery policy
-
-- **Architecture:** TypeScript strict, separate pure context engine (`src/core.ts`) from the VS Code adapter (`src/scan.ts`, `src/extension.ts`) and UI (`src/ui.ts`).
-- **Quality:** KISS / DRY / SOLID; explicit user commands, bounded I/O, no irreversible mutations; focused tests and CI on PRs.
-- **Token economy:** do not repeat unchanged checks; document validated SHAs and rerun only affected tests locally. CI validates each proposed head SHA once on PR.
-- **CI:** runs only on PR and manual dispatch; a successful PR produces a **private VSIX artifact**. Merge to `main` deliberately **does not repeat CI or publish**.
-- **Release:** publication, visibility change and public distribution require explicit owner approval and a separate release/publish change.
-
-See [private acceptance checklist](docs/PRIVATE_TEST_PLAN.md), [changelog](CHANGELOG.md) and [security policy](SECURITY.md).
+- No LLM embeddings, private provider history ingestion, or claim of semantic proof. Deterministic local ranking provides traceability, not "AI understands your entire codebase".
+- Documentation scan is bounded (up to 900 discovered Markdown files, 180 eligible files, 150 KB each, and up to 40 sections/file); incomplete scans are visible. Non-indexed files must not be treated as deleted.
+- One selected workspace root is analyzed at a time; switching roots isolates decisions and evidence.
+- Native remote Git history and extension-specific third-party report formats require independently verified adapters.
+- Actual visual QA in ArmoTuSitio IDE, accessibility testing in a real extension host and real README captures remain private acceptance gates before a public release. We do not call those complete without evidence.
 
 ## Español — resumen
 
-**Vinculivo** organiza las instrucciones y decisiones documentadas de tus proyectos dentro de VS Code. Podés analizar los archivos Markdown locales autorizados, seguir las referencias al archivo y línea de origen, detectar cuáles cambiaron desde el último análisis y copiar un contexto relevante para otro desarrollador o agente IA.
+**Vinculivo** es una extensión de inteligencia de contexto para VS Code y ArmoTuSitio IDE: indexa documentación, registra decisiones aprobadas por humanos, detecta cambios en archivos relacionados, prepara contextos específicos para Claude Code/Codex/Copilot y permite importar evidencia verificable. No envía información a terceros automáticamente; todas las exportaciones son explícitas. El desarrollo y el PR siguen **privados** hasta completar pruebas reales en el IDE.
 
-El escaneo es **manual y local**. Por ahora **no** se publica en Open VSX ni Marketplace, no se cambia la privacidad del repositorio y no hay release público. Primero se valida el VSIX en ArmoTuSitio IDE. Las funciones avanzadas del roadmap todavía no están implementadas.
+Para el paso a paso y ejemplos, consultá [Guía de uso (Español)](docs/GUIA_DE_USO_ES.md).
 
 ---
 
 <div align="center">
-  <strong>Part of the ArmoTuSitio developer-tooling family</strong><br />
-  <a href="https://armotusitio.com.ar">ArmoTuSitio</a> · <a href="https://github.com/Drako01">GitHub</a><br />
-  Licensed under <a href="LICENSE">MIT</a> · © 2026 Alejandro Daniel Di Stefano
+
+**ArmoTuSitio Engineering Tools** · [ArmoTuSitio](https://armotusitio.com.ar) · [GitHub](https://github.com/Drako01)
+
+MIT License · © 2026 Alejandro Daniel Di Stefano
+
 </div>

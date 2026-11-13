@@ -14,6 +14,7 @@ export interface ContextRecord {
 
 const SECRET = /\b(?:api[_-]?key|access[_-]?token|secret|password|private[_-]?key|client[_-]?secret|authorization)\b\s*(?:[:=]|\s+is\s+)/i;
 const PRIVATE_KEY = /-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----/i;
+const TOKEN_PATTERN = /\b(?:ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9_-]{20,}|AKIA[A-Z0-9]{16}|Bearer\s+[A-Za-z0-9._~+\/-]{16,})/i;
 const MAX_SECTION_CHARS = 1600;
 
 export function sha256(input: string): string { return createHash('sha256').update(input, 'utf8').digest('hex'); }
@@ -28,10 +29,11 @@ export function isRelevantMarkdown(file: string): boolean {
   return false;
 }
 
-export function sanitizeExcerpt(input: string): string {
-  return input.split(/\r?\n/).map(line => SECRET.test(line) || PRIVATE_KEY.test(line) ? '[REDACTED: potential credential]' : line)
-    .join('\n').replace(/\u0000/g, '').slice(0, MAX_SECTION_CHARS);
+export function redactSensitiveText(input: string): string {
+  return input.split(/\r?\n/).map(line => SECRET.test(line) || PRIVATE_KEY.test(line) || TOKEN_PATTERN.test(line) ? '[REDACTED: potential credential]' : line)
+    .join('\n').replace(/\u0000/g, '');
 }
+export function sanitizeExcerpt(input: string): string { return redactSensitiveText(input).slice(0,MAX_SECTION_CHARS); }
 
 export function indexMarkdown(file: string, rawText: string, changedSinceLastScan = false): ContextRecord[] {
   const text = rawText.slice(0, 100_000);
