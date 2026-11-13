@@ -75,7 +75,7 @@ export function activate(context:vscode.ExtensionContext):{registerEvidenceProvi
     if(view.scanning){return;}
     view.scanning=true;view.error=undefined;update();
     try{
-      const result=await vscode.window.withProgress({location:vscode.ProgressLocation.Notification,title:'Vinculivo: indexing permitted documentation',cancellable:true},(_progress:vscode.Progress<vscode.ProgressReport>,token:vscode.CancellationToken)=>scanWorkspace(target,context.workspaceState,token));
+      const result=await vscode.window.withProgress({location:vscode.ProgressLocation.Notification,title:'Vinculivo: indexing permitted documentation',cancellable:true},(_progress,token)=>scanWorkspace(target,context.workspaceState,token));
       // Ignore stale results if the user changed folder while indexing.
       if(target.uri.toString()!==folder()?.uri.toString()){return;}
       current=result;
