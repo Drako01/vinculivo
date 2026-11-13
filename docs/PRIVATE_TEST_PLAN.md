@@ -14,6 +14,9 @@
 
 - [ ] Install fresh build, reload, and ensure **monochrome network logo** renders exactly like the main logo (not the old hexagonal icon)
 - [ ] Launch from Activity Bar into central editor; reopen and restore UI after reload
+- [ ] Single Activity Bar icon click opens the editor directly (no extra launcher-tree click); sidebar closes after activation
+- [ ] Click icon again after hiding/reopening the view: focuses the same Control Center tab without duplicates
+- [ ] Confirm Command Palette `Vinculivo: Open Control Center` still works without collapsing an unrelated sidebar
 - [ ] Overview: empty state, trusted/untrusted state, local scan, source citation navigation, bad documents
 - [ ] Multi-root selection prevents decisions/evidence crossing root boundaries
 - [ ] Create proposal, link document and code paths, review and accept after dialog

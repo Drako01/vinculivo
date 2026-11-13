@@ -243,8 +243,21 @@ export function activate(context:vscode.ExtensionContext):{registerEvidenceProvi
       }
     }catch(error){showError(error);}
   }
+  // The Activity Bar selects a View Container, not a command. React to the view
+  // becoming visible so one click opens the full Control Center in the editor.
+  // Closing the temporary sidebar makes the next icon click fire visibility again.
+  // Keep the existing tree item as a keyboard-accessible fallback.
+  const launcherView=vscode.window.createTreeView('vinculivo.launcher',{treeDataProvider:new Launcher()});
   context.subscriptions.push(
-    vscode.window.registerTreeDataProvider('vinculivo.launcher',new Launcher()),
+    launcherView,
+    launcherView.onDidChangeVisibility(({visible})=>{
+      if(!visible){return;}
+      openCenter();
+      // VS Code offers no direct Activity Bar click event. This closes only the
+      // temporary sidebar opened by the launcher; unsupported layouts still
+      // retain the central Control Center.
+      void vscode.commands.executeCommand('workbench.action.closeSidebar').then(undefined,()=>{});
+    }),
     vscode.commands.registerCommand('vinculivo.openControlCenter',openCenter),
     vscode.commands.registerCommand('vinculivo.scan',async()=>{openCenter();await scan();}),
     vscode.commands.registerCommand('vinculivo.copyHandoff',async()=>{try{await copy();}catch(e){showError(e);}}),

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] — Preview Activity Bar usability hotfix (unreleased)
+
+- Selecting the Vinculivo icon in the Activity Bar opens or focuses the full Control Center in the central editor immediately, without requiring a separate launcher item click.
+- Closes the temporary launcher sidebar to allow subsequent icon selections to reopen/focus the same editor panel; retains the keyboard-accessible launcher and Command Palette fallback.
+- Adds a focused regression test for initial click, repeated selection, single-panel reuse, and command fallback. No changes to approved branding or analysis logic.
+
 ## [0.2.0] — Preview engineering candidate (unreleased)
 
 - Replaced documentation-only MVP with a full decision lifecycle: proposals, human review, acceptance, supersession, deprecation and local workspace persistence.

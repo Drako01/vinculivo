@@ -2,7 +2,7 @@
   "name": "vinculivo",
   "displayName": "Vinculivo",
   "description": "Local-first verified project context, decision governance and multi-agent handoff for VS Code",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "armotusitio",
   "author": {
     "name": "Alejandro Daniel Di Stefano",
