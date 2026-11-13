@@ -22,9 +22,9 @@ export async function scanWorkspace(folder: vscode.WorkspaceFolder, state: vscod
     if (files >= 120) { break; }
     const path = uri.path.startsWith(root) ? uri.path.slice(root.length) : '';
     if (!path || !isRelevantMarkdown(path)) { continue; }
-    const stat = await vscode.workspace.fs.stat(uri).catch(() => undefined);
+    const stat = await Promise.resolve(vscode.workspace.fs.stat(uri)).catch(() => undefined);
     if (!stat || stat.size > 100_000) { continue; }
-    const raw = await vscode.workspace.fs.readFile(uri).catch(() => undefined);
+    const raw = await Promise.resolve(vscode.workspace.fs.readFile(uri)).catch(() => undefined);
     if (!raw) { continue; }
     const content = new TextDecoder('utf-8', { fatal: false }).decode(raw);
     const key = `${folder.uri.toString()}/${path}`;

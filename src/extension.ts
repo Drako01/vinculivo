@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('vinculivo.openControlCenter', openCenter),
     vscode.commands.registerCommand('vinculivo.scan', async () => { openCenter(); await scan(); }),
     vscode.commands.registerCommand('vinculivo.copyHandoff', () => copyHandoff('')),
-    vscode.workspace.onDidChangeWorkspaceTrust(() => { current = undefined; view = { ...EMPTY_STATE, project: folder()?.name ?? 'No workspace' }; render(); })
+    vscode.workspace.onDidGrantWorkspaceTrust(() => { current = undefined; view = { ...EMPTY_STATE, project: folder()?.name ?? 'No workspace' }; render(); })
   );
 }
 
