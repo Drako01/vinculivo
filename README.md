@@ -11,7 +11,7 @@
 </div>
 
 > [!IMPORTANT]
-> **v0.2.0 — Preview candidate.** The repository is **public**, but publishing the extension to VS Code Marketplace / Open VSX is a **separate step** and is **not yet confirmed**. `package.json` sets `preview: true` for the eventual public preview. The PR CI generates an Actions VSIX for manual validation; real IDE UX acceptance is pending.
+> **v0.2.1 — Preview hotfix candidate.** The repository is **public**, but publishing the extension to VS Code Marketplace / Open VSX is a **separate step** and is **not yet confirmed**. `package.json` sets `preview: true` for the eventual public preview. The PR CI generates an Actions VSIX for manual validation; real IDE UX acceptance is pending.
 
 ## Why Vinculivo exists
 
@@ -47,7 +47,7 @@ El logo aprobado es **la fuente de verdad**: anillo circular, tres nodos exterio
 
 ### UI and brand
 
-The top brand icon and `media/brand/vinculivo-activity-bar.svg` share the **same actual geometry**: thin circular boundary, three outer nodes, a central fourth node and a triangular set of links. The Activity Bar is **monochrome (`currentColor`)**, following VS Code theme conventions. The Control Center opens in the **main editor**, not in a compressed sidebar.
+The top brand icon and `media/brand/vinculivo-activity-bar.svg` share the **same actual geometry**: thin circular boundary, three outer nodes, a central fourth node and a triangular set of links. The Activity Bar is **monochrome (`currentColor`)**, following VS Code theme conventions. The Control Center opens in the **main editor**, not in a compressed sidebar. **Clicking Vinculivo's Activity Bar icon now opens or focuses this editor immediately**; the temporary launcher sidebar closes automatically. The Command Palette command remains available as a fallback.
 
 ## Screenshots — actual Control Center renderer
 
