@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.1] — Preview Activity Bar usability hotfix (unreleased)
+## [0.2.1] — Preview Activity Bar usability hotfix and verified release
 
 - Selecting the Vinculivo icon in the Activity Bar opens or focuses the full Control Center in the central editor immediately, without requiring a separate launcher item click.
 - Closes the temporary launcher sidebar to allow subsequent icon selections to reopen/focus the same editor panel; retains the keyboard-accessible launcher and Command Palette fallback.
@@ -17,6 +17,8 @@
 - Preserved PR-only three-OS checks, with one Actions VSIX candidate and no publish pipeline.
 - Corrected Activity Bar identity to match the official four-node circular brand.
 - Added immutable-logo brand identity, moodboard, dark/light lockups, palettes, Preview branding and brand integrity gate.
+
+- Added immutable PR-artifact-based OIDC publishing to Marketplace/Open VSX with protected release environments and GitHub prerelease asset; no post-merge duplicate CI.
 
 ## [0.1.0] — Initial private candidate
 

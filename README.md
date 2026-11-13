@@ -11,7 +11,7 @@
 </div>
 
 > [!IMPORTANT]
-> **v0.2.1 — Preview hotfix candidate.** The repository is **public**, but publishing the extension to VS Code Marketplace / Open VSX is a **separate step** and is **not yet confirmed**. `package.json` sets `preview: true` for the eventual public preview. The PR CI generates an Actions VSIX for manual validation; real IDE UX acceptance is pending.
+> **v0.2.1 — Preview.** This is a public Preview extension; marketplace availability is verified through the registries, not assumed from repository visibility. The release workflow reuses the exact three-platform-verified PR VSIX and publishes through OIDC after a qualifying merge. Real IDE UX acceptance remains a separate requirement. See [release and recovery guide](docs/RELEASE.md).
 
 ## Why Vinculivo exists
 

@@ -1,6 +1,6 @@
-# Vinculivo — Private Enterprise Acceptance
+# Vinculivo — Preview Enterprise Acceptance
 
-> Status: **Private engineering candidate. Not approved for public release.** The project owner performs manual acceptance in the actual IDE. Do not claim completion of unchecked items.
+> Status: **Public Preview engineering acceptance**. Source is public and a release workflow is configured; manual installed-extension acceptance is independent of CI. Do not claim completion of unchecked items.
 
 ## Automated gates (exact PR head SHA)
 
@@ -8,7 +8,7 @@
 - [ ] TypeScript strict compilation on all three platforms
 - [ ] Pure unit and adversarial tests for decisions, path safety, staleness, handoff, budget, evidence and Webview
 - [ ] Package VSIX on Linux and inspect artifact inventory + checksum
-- [ ] No automatic public publish, tag, release or post-merge repeated CI
+- [ ] Release reuses the exact successful PR VSIX without post-merge repeated CI; OIDC publication is gated by release governance and registry environments
 
 ## Manual VSIX install (ArmoTuSitio IDE and VS Code)
 
@@ -39,7 +39,7 @@
 - [ ] Direct provider integration with Probato PR, Indizivo, Orquestivo, Saturivo, Noditrivo and Vestigivo RCA after their output contracts are confirmed
 - [ ] Optional provider-specific model tokenizers (currently a conservative UTF-8 sizing heuristic)
 - [ ] Signed provenance for third-party evidence, where supported by upstream tools
-- [ ] Public marketplace collateral and public release workflow require independent authorization
+- [ ] Marketplace and Open VSX OIDC environments must be configured and checked; see `docs/RELEASE.md`
 
 ## Token economy
 
