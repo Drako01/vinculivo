@@ -49,7 +49,36 @@ El logo aprobado es **la fuente de verdad**: anillo circular, tres nodos exterio
 
 The top brand icon and `media/brand/vinculivo-activity-bar.svg` share the **same actual geometry**: thin circular boundary, three outer nodes, a central fourth node and a triangular set of links. The Activity Bar is **monochrome (`currentColor`)**, following VS Code theme conventions. The Control Center opens in the **main editor**, not in a compressed sidebar.
 
-**Authentic screenshots are pending review in ArmoTuSitio IDE.** No static UI mockups are represented as actual extension-host screenshots. See [private acceptance plan](docs/PRIVATE_TEST_PLAN.md).
+## Screenshots — actual Control Center renderer
+
+The four screenshots below are captured from **Vinculivo’s actual `src/ui.ts` Webview implementation**, rendered in headless Chromium with a **deterministic, synthetic example workspace**. They show implemented UI, not the conceptual brand moodboard. **They are not screenshots of an installed VS Code / ArmoTuSitio IDE Extension Host**, whose native visual acceptance remains pending. No private project data was used.
+
+### 1. Overview — project intelligence
+
+Documents indexed, linked source sections, decisions and signals requiring review, with file-and-line source navigation.
+
+![Real Vinculivo Webview renderer — Overview with synthetic workspace](media/screenshots/01-control-center-overview.png)
+
+### 2. Decisions — human-confirmed knowledge
+
+Decision lifecycle (proposed, accepted, superseded and deprecated), change warnings, linked files and the decision editor.
+
+![Real Vinculivo Webview renderer — Decisions with synthetic workspace](media/screenshots/02-decision-register.png)
+
+### 3. Preflight and agent handoff
+
+Task-specific context selection, target agent, approximate token budget, review warnings and a source-referenced Markdown preview.
+
+![Real Vinculivo Webview renderer — Preflight and handoff with synthetic workspace](media/screenshots/03-preflight-handoff.png)
+
+### 4. Evidence registry
+
+Imported evidence summaries, their providers and provenance; reports remain unverified until checked against their original sources.
+
+![Real Vinculivo Webview renderer — Evidence registry with synthetic workspace](media/screenshots/04-evidence-registry.png)
+
+**Reproducibility:** `scripts/readme-fixture.cjs` contains only synthetic records. Build the extension (`npm run build`), then run `scripts/capture-readme-screenshots.py` with Python Playwright and Chromium (`VINCULIVO_CHROMIUM` may specify the executable). The script captures the **same Webview HTML renderer shipped by the extension** and checks for runtime JavaScript errors. Genuine VS Code / ArmoTuSitio IDE Extension Host screenshots are still part of the [Preview acceptance checklist](docs/PRIVATE_TEST_PLAN.md).
+
 
 ## Quick start — Preview validation
 

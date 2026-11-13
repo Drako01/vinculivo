@@ -51,7 +51,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 <button id="nav-decisions" type="button" role="tab" aria-controls="content" aria-selected="false" data-tab="decisions" title="Decisions"><span>◇</span><span>Decisions</span></button>
 <button id="nav-preflight" type="button" role="tab" aria-controls="content" aria-selected="false" data-tab="preflight" title="Preflight &amp; handoff"><span>◎</span><span>Preflight &amp; handoff</span></button>
 <button id="nav-evidence" type="button" role="tab" aria-controls="content" aria-selected="false" data-tab="evidence" title="Evidence"><span>▤</span><span>Evidence</span></button>
-</nav></div><div class="rail-foot"><span class="dot"></span> Local-first · No telemetry<br/><b>Private engineering build</b><br/>No automatic publishing</div>
+</nav></div><div class="rail-foot"><span class="dot"></span> Local-first · No telemetry<br/><b>Preview engineering build</b><br/>No automatic publishing</div>
 </aside>
 <main class="workspace" id="content" role="tabpanel" tabindex="-1" aria-labelledby="nav-overview"><div class="top"><div><div class="eyebrow">ArmoTuSitio / Engineering Intelligence</div><h1 id="page-title">Project Intelligence</h1><div class="sub" id="subtitle"></div></div><div class="topactions"><select aria-label="Workspace folder" id="folder" class="headselect"></select><button class="btn secondary" id="scan" type="button">↻ Scan sources</button></div></div>
 <div id="alert" aria-live="polite"></div><div id="body"></div><footer class="footnote" id="footer"></footer></main></div>
