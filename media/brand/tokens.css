@@ -1,0 +1,28 @@
+/* Vinculivo brand tokens — derived from approved vinculivo-icon-256.png.
+   Use VS Code theme tokens for accessible workbench UI surfaces and foregrounds. */
+:root {
+  --vinculivo-bg: #111827;
+  --vinculivo-deep: #0B1220;
+  --vinculivo-surface: #1B263D;
+  --vinculivo-border: #506586;
+  --vinculivo-cyan: #53CDDC;
+  --vinculivo-cyan-alt: #50C7D7;
+  --vinculivo-purple: #AB86F4;
+  --vinculivo-purple-alt: #9072E7;
+  --vinculivo-text: #F1F8FF;
+  --vinculivo-muted: #B4C1DE;
+  --vinculivo-success: #48D3A0;
+  --vinculivo-warning: #F3BB68;
+  --vinculivo-error: #FB8296;
+  --vinculivo-radius-control: 8px;
+  --vinculivo-radius-card: 12px;
+  --vinculivo-radius-hero: 16px;
+  --vinculivo-focus-ring: 2px;
+}
+/* Sample integration; do not force dark background when VS Code runs in light mode. */
+.vinculivo-root {
+  --surface: var(--vscode-sideBar-background, var(--vinculivo-surface));
+  --fg: var(--vscode-editor-foreground, var(--vinculivo-text));
+  --accent: var(--vinculivo-cyan);
+  --purple: var(--vinculivo-purple);
+}

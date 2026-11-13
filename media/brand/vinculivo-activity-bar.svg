@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <!-- Faithful monochrome adaptation of vinculivo-icon-256.png: circular ring, triangular network, central node. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9.05" stroke-width="1.15"/>
+    <path d="M7.15 7.7H16.85L12 17.65Z" stroke-width="1.15"/>
+    <path d="M7.15 7.7 12 11.25 16.85 7.7M12 11.25V17.65" stroke-width="0.95"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="7.15" cy="7.7" r="1.7"/>
+    <circle cx="16.85" cy="7.7" r="1.7"/>
+    <circle cx="12" cy="17.65" r="1.7"/>
+    <circle cx="12" cy="11.25" r="1.0"/>
+  </g>
+</svg>
