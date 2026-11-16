@@ -19,13 +19,16 @@ for(let i=0;i<entryCount;i++){
  const name=buffer.subarray(pos+46,pos+46+nameLen).toString('utf8');if(name.includes('..')||name.startsWith('/'))fail('unsafe archive entry path');
  entries.set(name,{compression,length,offset});pos+=46+nameLen+extraLen+commentLen;
 }
-for(const required of ['extension/package.json','extension/dist/extension.js','extension/media/brand/vinculivo-activity-bar.svg','extension/media/brand/vinculivo-icon-256.png']){
+for(const required of ['extension.vsixmanifest','extension/package.json','extension/dist/extension.js','extension/media/brand/vinculivo-activity-bar.svg','extension/media/brand/vinculivo-icon-256.png']){
  if(!entries.has(required))fail('missing '+required);
 }
-for(const disallowed of ['extension/src/extension.ts','extension/test/core.test.cjs','extension/.github/workflows/ci.yml']){if(entries.has(disallowed))fail('packaged development file '+disallowed)}
+for(const disallowed of ['extension/src/extension.ts','extension/test/core.test.cjs','extension/.github/workflows/ci.yml','extension/vinculivo.vsix.sha256']){if(entries.has(disallowed))fail('packaged development file '+disallowed)}
 function extract(name){const x=entries.get(name);let n=x.offset;if(buffer.readUInt32LE(n)!==0x04034b50)fail('invalid local entry '+name);n+=30+buffer.readUInt16LE(n+26)+buffer.readUInt16LE(n+28);const bytes=buffer.subarray(n,n+x.length);return x.compression===8?zlib.inflateRawSync(bytes):x.compression===0?bytes:fail('unsupported ZIP compression')}
 const manifest=JSON.parse(extract('extension/package.json').toString('utf8'));
 if(manifest.name!=='vinculivo'||!manifest.contributes?.viewsContainers?.activitybar?.[0]?.icon?.endsWith('vinculivo-activity-bar.svg'))fail('invalid extension manifest or icon');
+if(manifest.preview!==false||manifest.private===true||manifest.publisher!=='armotusitio')fail('package must be a public stable extension');
+const vsixManifest=extract('extension.vsixmanifest').toString('utf8');
+if(/<GalleryFlags>[^<]*\bPreview\b/i.test(vsixManifest)||/Id="Microsoft\.VisualStudio\.Code\.PreRelease"\s+Value="true"/i.test(vsixManifest))fail('VSIX metadata still marks the extension as Preview or prerelease');
 const icon=extract('extension/media/brand/vinculivo-activity-bar.svg').toString('utf8');
 if(!icon.includes('circle cx="12" cy="12"')||!icon.includes('currentColor')||icon.includes('M7 7.5 12 4'))fail('outdated or nonmonochrome Activity Bar icon');
 const sha=crypto.createHash('sha256').update(buffer).digest('hex');fs.writeFileSync(`${file}.sha256`,`${sha}  ${file}\n`);

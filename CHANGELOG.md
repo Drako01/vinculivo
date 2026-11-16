@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0] — Markdown handoff export and stable release
+
+- Save the reviewed handoff as a Markdown file from Preflight or the Command Palette. The saved file matches
+  the bounded, redacted preview; cancellation leaves files untouched.
+- Block exports if workspace trust, the selected workspace or the generated handoff changes while choosing a file.
+- Remove the Preview label from the extension manifest and Control Center; publish stable GitHub releases.
+- Keep exact-PR-artifact provenance, three-platform CI and immutable branding checks for stable packages.
+
 ## [0.2.1] — Preview Activity Bar usability hotfix and verified release
 
 - Selecting the Vinculivo icon in the Activity Bar opens or focuses the full Control Center in the central editor immediately, without requiring a separate launcher item click.

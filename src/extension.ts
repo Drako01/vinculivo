@@ -164,6 +164,24 @@ export function activate(context:vscode.ExtensionContext):{registerEvidenceProvi
     toast(`Copied ${estimateTokens(currentHandoff)} approximate tokens. Review before sharing.`);
   }
 
+  async function exportHandoff():Promise<void>{
+    const target=folder();
+    if(!target||!vscode.workspace.isTrusted){throw new Error('Trusted workspace required.');}
+    if(!currentHandoff){throw new Error('Generate and review a handoff before saving Markdown.');}
+    const content=currentHandoff;
+    const destination=await vscode.window.showSaveDialog({
+      defaultUri:vscode.Uri.joinPath(target.uri,'vinculivo-handoff.md'),
+      filters:{'Markdown':['md']},saveLabel:'Save reviewed handoff'
+    });
+    if(!destination){return;}
+    if(!vscode.workspace.isTrusted||target.uri.toString()!==folder()?.uri.toString()||content!==currentHandoff){
+      throw new Error('Workspace or handoff changed. Review the current preview before saving.');
+    }
+    if(!['file','vscode-remote'].includes(destination.scheme)){throw new Error('Save to a local or remote file.');}
+    await vscode.workspace.fs.writeFile(destination,Buffer.from(content,'utf8'));
+    toast('Handoff saved as Markdown. Review before sharing.');
+  }
+
   async function exportDecisions():Promise<void>{
     const target=folder();if(!target||!vscode.workspace.isTrusted){throw new Error('Trusted workspace required.');}
     const approved=await vscode.window.showWarningMessage('Export decision summaries to a JSON file? The bundle may contain internal project information. It does not include source excerpts. Review before sharing.',{modal:true},'Choose destination');
@@ -235,6 +253,7 @@ export function activate(context:vscode.ExtensionContext):{registerEvidenceProvi
         case 'remove':if(typeof m.id==='string'){await removeDecision(m.id);}break;
         case 'preflight':generate(cleanUserText(m.task,300),m.profile??'generic',m.tokenBudget??3000);break;
         case 'copy':await copy();break;
+        case 'export-handoff':await exportHandoff();break;
         case 'export-decisions':await exportDecisions();break;
         case 'import-decisions':await importDecisions();break;
         case 'import-evidence':await importEvidence();break;
@@ -261,6 +280,7 @@ export function activate(context:vscode.ExtensionContext):{registerEvidenceProvi
     vscode.commands.registerCommand('vinculivo.openControlCenter',openCenter),
     vscode.commands.registerCommand('vinculivo.scan',async()=>{openCenter();await scan();}),
     vscode.commands.registerCommand('vinculivo.copyHandoff',async()=>{try{await copy();}catch(e){showError(e);}}),
+    vscode.commands.registerCommand('vinculivo.exportHandoff',async()=>{try{await exportHandoff();}catch(e){showError(e);}}),
     vscode.commands.registerCommand('vinculivo.collectEvidence',async()=>{try{await collectRegisteredEvidence();}catch(e){showError(e);}}),
     vscode.workspace.onDidChangeWorkspaceFolders(()=>refreshWorkspace()),
     vscode.workspace.onDidGrantWorkspaceTrust(()=>refreshWorkspace())

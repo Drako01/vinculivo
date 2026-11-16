@@ -91,8 +91,8 @@ jobs:
           node - <<'NODE'
           const {execFileSync}=require('node:child_process');
           const m=JSON.parse(execFileSync('unzip',['-p','vinculivo.vsix','extension/package.json'],{encoding:'utf8'}));
-          if(m.name!=='vinculivo'||m.publisher!=='armotusitio'||m.version!==process.env.EXPECTED_VERSION||m.private===true||m.preview!==true){
-            console.error('Packaged extension identity/version/preview differs from main');process.exit(1);
+          if(m.name!=='vinculivo'||m.publisher!=='armotusitio'||m.version!==process.env.EXPECTED_VERSION||m.private===true||m.preview!==false){
+            console.error('Packaged extension identity/version/stable status differs from main');process.exit(1);
           }
           NODE
           echo "sha256=$(cut -d' ' -f1 vinculivo.vsix.sha256)" >> "$GITHUB_OUTPUT"
@@ -177,7 +177,7 @@ jobs:
           ovsx publish vinculivo.vsix --trusted-publishing
 
   github-release:
-    name: GitHub prerelease from verified VSIX
+    name: GitHub release from verified VSIX
     needs: [authorize, artifact, marketplace]
     if: needs.artifact.result == 'success' && needs.marketplace.result == 'success'
     runs-on: ubuntu-latest
@@ -188,7 +188,7 @@ jobs:
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # pinned v8
         with:
           name: vinculivo-release-vsix
-      - name: Recheck checksum before immutable GitHub prerelease
+      - name: Recheck checksum before immutable GitHub release
         env:
           EXPECTED_SHA: ${{ needs.artifact.outputs.sha256 }}
         run: echo "$EXPECTED_SHA  vinculivo.vsix" | sha256sum --check -
@@ -202,10 +202,10 @@ jobs:
           set -euo pipefail
           tag="v$VERSION"
           if gh release view "$tag" >/dev/null 2>&1; then
-            echo "GitHub prerelease $tag already exists. No overwrite."
+            echo "GitHub release $tag already exists. No overwrite."
             exit 0
           fi
           gh release create "$tag" vinculivo.vsix vinculivo.vsix.sha256 \
-            --title "Vinculivo $VERSION Preview" --prerelease \
-            --notes "Vinculivo Preview $VERSION — verified PR artifact (same SHA-256 in both registries)." \
+            --title "Vinculivo $VERSION" --latest \
+            --notes "Vinculivo $VERSION — verified PR artifact (Open VSX publication is tracked separately)." \
             --target "$GITHUB_SHA"

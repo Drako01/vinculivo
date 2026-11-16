@@ -2,7 +2,7 @@
   "name": "vinculivo",
   "displayName": "Vinculivo",
   "description": "Local-first verified project context, decision governance and multi-agent handoff for VS Code",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "publisher": "armotusitio",
   "author": {
     "name": "Alejandro Daniel Di Stefano",
@@ -76,6 +76,10 @@
       {
         "command": "vinculivo.collectEvidence",
         "title": "Vinculivo: Collect Registered Evidence"
+      },
+      {
+        "command": "vinculivo.exportHandoff",
+        "title": "Vinculivo: Save Handoff as Markdown"
       }
     ],
     "viewsContainers": {
@@ -125,5 +129,5 @@
     "@vscode/vsce": "^3.2.0",
     "typescript": "^5.7.3"
   },
-  "preview": true
+  "preview": false
 }

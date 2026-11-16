@@ -26,7 +26,7 @@ assert.equal(mood.subarray(0,8).toString('hex'),'89504e470d0a1a0a','Moodboard PN
 assert.ok(mood.length>20_000,'Moodboard PNG should not be empty');
 const pkg = JSON.parse(read('package.json').toString('utf8'));
 assert.equal(pkg.icon,'media/brand/vinculivo-icon-256.png');
-assert.equal(pkg.preview,true,'Preview Marketplace badge required');
+assert.equal(pkg.preview,false,'Stable release must not carry a Preview badge');
 assert.equal(pkg.galleryBanner.color,'#111827');
 assert.equal(pkg.contributes.viewsContainers.activitybar[0].icon,'media/brand/vinculivo-activity-bar.svg');
-console.log('Vinculivo brand PASS: immutable logo, matching mono icon, lockups, moodboard and Preview manifest');
+console.log('Vinculivo brand PASS: immutable logo, matching mono icon, lockups, moodboard and stable manifest');

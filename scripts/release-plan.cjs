@@ -41,8 +41,8 @@ function releasePlan({env, packageJson, changelog, get, write}) {
   if (!/^[-\w.]+\/[-\w.]+$/.test(repo||'') || !/^[a-f0-9]{40}$/i.test(sha||'')) fail('invalid repository or SHA');
   if (env.GITHUB_REF !== 'refs/heads/main' || !['push','workflow_dispatch'].includes(event)) fail('only main push or explicit main dispatch is permitted');
   const version=packageJson.version;
-  if (!/^\d+\.\d+\.\d+$/.test(version) || packageJson.name !== 'vinculivo' || packageJson.publisher !== 'armotusitio' || packageJson.private === true || packageJson.preview !== true)
-    fail('manifest publisher/version/private/Preview requirements not met');
+  if (!/^\d+\.\d+\.\d+$/.test(version) || packageJson.name !== 'vinculivo' || packageJson.publisher !== 'armotusitio' || packageJson.private === true || packageJson.preview !== false)
+    fail('manifest publisher/version/private/stable requirements not met');
   if (!finalizedChangelog(version,changelog)) fail(`version ${version} requires a finalized changelog`);
   if (event === 'workflow_dispatch' && (env.CONFIRMATION !== 'PUBLISH_VINCULIVO' || env.REQUESTED_VERSION !== version))
     fail('manual dispatch requires PUBLISH_VINCULIVO and the exact version');
