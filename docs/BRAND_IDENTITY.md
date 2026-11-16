@@ -1,6 +1,6 @@
 # Vinculivo · Identidad de marca
 
-> **Brand system v1 · 2026-11-13 · Preview**  
+> **Brand system v1 · 2026-11-13**
 > Fuente de verdad visual: [`media/brand/vinculivo-icon-256.png`](../media/brand/vinculivo-icon-256.png), el logo **aprobado**. Este documento define usos y aplicaciones; **no autoriza cambiar el símbolo**. Toda nueva variante debe respetar la estructura geométrica aprobada.  
 > Alcance: ArmoTuSitio Engineering Tools / VS Code extension / ArmoTuSitio IDE.
 
@@ -118,7 +118,8 @@ Usar **color + icono + etiqueta** en todos los estados. Reservar gradientes para
 ## 6. Aplicaciones aprobadas
 
 **README:** logo oficial + explicación de producto + moodboard etiquetado como concepto + capturas reales de la extensión cuando se hayan probado.  
-**Marketplace/Open VSX:** icono PNG aprobado, descriptor claro, `preview: true` mientras dure la etapa Preview, `galleryBanner.color` coherente. No afirmar disponibilidad hasta haber publicado efectivamente.  
+**Marketplace/Open VSX:** icono PNG aprobado, descriptor claro, `preview: false` en la versión estable 0.3.0,
+`galleryBanner.color` coherente. No afirmar disponibilidad hasta haber publicado efectivamente.
 **Activity Bar:** SVG mono registrado en `package.json`, sin variantes cromáticas.  
 **Header Control Center:** símbolo mono y nombre de producto, no una creación alternativa del logo.  
 **Material promocional:** variantes dark/light, sin deformaciones; no incluir estrellas/descargas ficticias.
@@ -129,8 +130,10 @@ Usar **color + icono + etiqueta** en todos los estados. Reservar gradientes para
 2. **Derivados:** composiciones SVG y moodboard documentado. Son editables; el símbolo permanece bloqueado.
 3. **Tests:** comprobar bytes de PNG, legibilidad visual de 24 px y compatibilidad light/dark; validar renderizado SVG y rutas del manifiesto.
 4. **Capturas reales:** obtenidas desde VS Code/ArmoTuSitio IDE, con versión y entorno indicados; nunca fabricar una screenshot de producción con un mockup.
-5. **Preview:** el branding está preparado para exposición pública del repositorio, pero el paquete publicado es un paso independiente y debe estar respaldado por pruebas reales.
-6. **Transición a estable:** cambiar `preview` a `false` únicamente con aprobación expresa y checklist de calidad cerrado.
+5. **Publicación:** la identidad se conserva en la versión estable. La disponibilidad del paquete debe
+   comprobarse por separado en cada registro.
+6. **Versión estable:** el propietario solicitó retirar Preview para 0.3.0. Los checks automatizados y
+   la aceptación manual del editor deben informarse por separado, sin marcar pruebas pendientes como realizadas.
 
 ## 8. Checklist visual previo al merge
 
@@ -138,7 +141,7 @@ Usar **color + icono + etiqueta** en todos los estados. Reservar gradientes para
 - [x] Variantes de lockup dark y light como composición, sin nuevo símbolo.
 - [x] Icono SVG de Activity Bar derivado de la geometría aprobada.
 - [x] Tokens documentados y contrastes principales comprobados.
-- [x] README con enlace al sistema visual y estado Preview correcto.
+- [x] README con enlace al sistema visual y estado de publicación correcto.
 - [ ] Verificar representación a 24 px en el Activity Bar real de ArmoTuSitio IDE y VS Code.
 - [ ] Capturas auténticas del Control Center en el editor central con tema dark y light.
 - [ ] Evaluación de teclado, zoom 200 %, screen reader y distintos tamaños de ventana.

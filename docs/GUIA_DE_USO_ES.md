@@ -1,8 +1,10 @@
-# Guía de uso de Vinculivo (versión privada)
+# Guía de uso de Vinculivo
 
 ## 1. Instalación
 
-Desde GitHub Actions del [PR #1](https://github.com/Drako01/vinculivo/pull/1), descargá el ZIP `vinculivo-private-vsix`. Compará el SHA-256 y utilizá **Extensions → Install from VSIX** en ArmoTuSitio IDE; recargá la ventana.
+Buscá **Vinculivo** (`armotusitio.vinculivo`) en el registro de extensiones de tu editor. También podés descargar
+el VSIX y su checksum desde [las releases de GitHub](https://github.com/Drako01/vinculivo/releases).
+Compará el SHA-256 y utilizá **Extensions → Install from VSIX** en ArmotuSitio IDE; recargá la ventana.
 
 ## 2. Overview: documentos y fuentes
 
@@ -18,7 +20,12 @@ Modificá una ruta asociada, ejecutá **Scan sources** y revisá la señal del r
 
 ## 5. Preflight y handoff
 
-En **Preflight & handoff**, escribí la tarea concreta, elegí Claude Code, Codex, Copilot o Markdown genérico y ajustá el presupuesto aproximado de tokens. Generá una vista previa, verificá fuentes y advertencias y presioná **Copy approved handoff**. Antes de pegar el texto en un asistente, revisá que no haya datos sensibles; la redacción de secretos es heurística.
+En **Preflight & handoff**, escribí la tarea concreta, elegí Claude Code, Codex, Copilot o Markdown genérico y
+ajustá el presupuesto aproximado de tokens. Generá una vista previa y verificá sus fuentes y advertencias.
+Usá **Copy approved handoff** para copiarla o **Save Markdown** para guardarla como archivo `.md` en la ubicación
+que elijas. También podés usar el comando **Vinculivo: Save Handoff as Markdown** después de generar el contexto.
+El archivo conserva el mismo contenido y los límites de la vista previa. Cancelar el diálogo no escribe archivos.
+Antes de compartirlo, revisá que no haya datos sensibles; la redacción de secretos es heurística.
 
 ## 6. Evidence y portabilidad
 

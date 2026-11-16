@@ -10,4 +10,5 @@ tsconfig.json
 **/*.map
 .vscode-test/**
 *.vsix
+*.vsix.sha256
 *.log

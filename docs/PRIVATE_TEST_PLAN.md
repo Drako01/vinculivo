@@ -1,6 +1,7 @@
-# Vinculivo — Preview Enterprise Acceptance
+# Vinculivo — Extension acceptance
 
-> Status: **Public Preview engineering acceptance**. Source is public and a release workflow is configured; manual installed-extension acceptance is independent of CI. Do not claim completion of unchecked items.
+> The 0.3.0 manifest requests stable distribution. Automated CI and manual installed-extension acceptance
+> remain independent. Do not claim completion of unchecked items.
 
 ## Automated gates (exact PR head SHA)
 
@@ -28,6 +29,8 @@
 - [ ] Import valid and malformed JSON evidence; reject oversized/out-of-scope files
 - [ ] Generate preflight for Codex/Claude/Copilot with source, warnings and bounded budget
 - [ ] Clipboard copy only on explicit action; verify heuristic redaction caveat
+- [ ] Save Markdown only after generation: choose destination and verify bytes match the preview
+- [ ] Cancel Save Markdown, switch workspace during save, and simulate a write failure; no false success
 - [ ] UI keyboard focus, Enter/Space buttons, accessible labels, zoom 100–200%, reduced motion
 - [ ] Dark and light themes, high contrast, 1366px and narrower editor sizes
 - [ ] Windows, Linux and macOS actual host smoke (where accessible)
